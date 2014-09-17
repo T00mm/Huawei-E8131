@@ -29,13 +29,18 @@ print cell.get_converged_status()
 print cell.get_user_remind()
 print cell.get_update_status()
 
-if cell.user_logged_in():
+if not cell.user_logged_in():
+	print "Going to login"
 	cell.post_user_login("admin","admin")
+else:
+	print "Already logged in"
 
-print cell.post_get_sms_list()['Count']
+sms_stuff = cell.post_get_sms_list()
 
-for message in cell.post_get_sms_list()['Messages']['Message']:
- 	print message['Phone']
+if sms_stuff:
+	print sms_stuff["Count"]
+	for message in sms_stuff['Messages']['Message']:
+		print message['Phone']
 
 print cell.post_sms_delete("40001")
 print cell.post_import_from_sim()

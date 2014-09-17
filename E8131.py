@@ -71,6 +71,8 @@ class E8131():
 	def __init__(self, **kwargs):
 		if 'url' in kwargs:
 			userUrl = kwargs['url']
+		else:
+			userUrl = self.ip
 		if 'debug' in kwargs:
 			self.debug = kwargs['debug']
 		url = urlparse(userUrl)
@@ -261,7 +263,7 @@ class E8131():
 		print "Could not test this, my provider has no USSD, please fill an issue with info about USSDs in it!"
 
 	def get_update_status(self):
-		info_avail['CurrentComponentStatus','CurrentComponentIndex','TotalComponents','DownloadProgress']
+		info_avail = ['CurrentComponentStatus','CurrentComponentIndex','TotalComponents','DownloadProgress']
 		return self.get_info(ApiUrls.UPDATE_STATUS,info_avail)
 
 	def post_get_sms_list(self, readcount = 20, boxtype = 1, sorttype = 0, ascending = 0, unreadpreffered = 0):
@@ -284,7 +286,7 @@ class E8131():
 			return False
 
 	def post_user_login(self, user = "admin", password = "admin"):
-		r = self.parse_xml(self.post_request(ApiUrls.USER_LOGIN,"<request><Username>" + user + "</Username><Password>" + cell.js_base64(password) + "</Password></request>").content)
+		r = self.parse_xml(self.post_request(ApiUrls.USER_LOGIN,"<request><Username>" + user + "</Username><Password>" + self.js_base64(password) + "</Password></request>").content)
 		if r['error'] == "108001":
 			self.log("Username is wrong",1)
 		if r['error'] == "108002":
@@ -363,4 +365,3 @@ class E8131():
 				return False
 		else:
 			return False
-
