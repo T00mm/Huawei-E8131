@@ -1,6 +1,6 @@
 # (Huawei) E8131
 
-This python library works with the Huawei E8131 mobile stick. 
+This python wrapper works with the Huawei E8131 mobile stick. 
 
  * Reads SMS, set them as read, deletes them,...
  * Send SMSes
